@@ -21,12 +21,27 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+X = [ones(m, 1) X];
 
+% confidences = sigmoid(Theta2 * sigmoid(Theta1 * X))
 
+% Theta1 in R_25x401
+% Theta2 in R_10x26
+% X in R_5000x401
 
+a_1 = X;
+z_2 = Theta1 * a_1'; % z_2 in R_25x5000
+a_2 = sigmoid(z_2)'; % a_2 in R_5000x25
+a_2 = [ones(size(a_2, 1), 1) a_2]; % a_2 in R_5000x26
+z_3 = Theta2 * a_2'; % z_2 in R_10x5000
+a_3 = sigmoid(z_3);
 
+confidences = a_3';
 
-
+for i = 1:m,
+  [v iv] = max(confidences(i, :));
+  p(i) = iv;
+end
 
 
 % =========================================================================
