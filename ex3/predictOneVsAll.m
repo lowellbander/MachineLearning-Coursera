@@ -30,11 +30,12 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+confidences = X * all_theta';
 
-
-
-
-
+for i = 1:m,
+  [v iv] = max(confidences(i, :));
+  p(i) = iv;
+end
 
 % =========================================================================
 
